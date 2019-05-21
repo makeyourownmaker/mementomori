@@ -1,15 +1,13 @@
 
 # mementomori 
 
-Memento mori: Remember death
-
 ![Lifecycle
 ](https://img.shields.io/badge/experimental-orange.svg?style=flat)
 ![Dependencies
 ](https://img.shields.io/badge/dependencies-none-brightgreen.svg?style=flat)
 
 mementomori is a python script for reflecting on how many days, weeks, months and years you've been alive
-and *roughly* how many more you will live.
+and *approximately* how many more you will live.
 
 
 ## Example Output
@@ -71,7 +69,7 @@ The mementomori script displays your age in years, months, weeks and days.
 It also estimates how much longer you will live based on the 
 [National life tables, UK: 2013 to 2015](https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/bulletins/nationallifetablesunitedkingdom/20132015)
 from the [Office for National Statistics](https://www.ons.gov.uk/).
-There are both male and female lifetime estimates.
+There are both male (79.1 years) and female (82.8 years) lifetime estimates.
 
 The script should be run from a daily cron job without the verbose option.
 In this case, it only displays ages and lifetime estimates on the following "milestones":
@@ -90,6 +88,7 @@ Further info:
 ## Roadmap
 
  * Check and double-check the milestone calculations
+ * Support males and females who are older than the life expectancy estimates
  * Expand usage information
  * Add docstrings
  * Add unit tests

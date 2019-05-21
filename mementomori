@@ -9,6 +9,7 @@ from datetime import date
 
 # TODO
 #      Check and double-check the milestone calculations
+#      Support males and females who are older than the life expectancy estimates
 #      Expand usage information
 #      Add docstrings
 #      Add unit tests
