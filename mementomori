@@ -1,0 +1,160 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
+import getopt
+import random
+from datetime import date
+
+
+# TODO
+#      Check and double-check the milestone calculations
+#      Expand usage information
+#      Add docstrings
+#      Add unit tests
+#      Return "x years, y months, z weeks and a days" instead of "42.87 years"
+#      Add option to print dates for next and/or all future milestone(s)
+#        eg 15,000 days old on ...
+
+
+def printAgeInfo(agedays, expect, lifetime):
+    print ''
+    print "You are", '{:0,.2f}'.format(agedays / 365.25), "years old"   #      10 years
+    print "You are", '{:0,.2f}'.format(agedays / 30.41),  "months old"  #      50 months
+    print "You are", '{:0,.2f}'.format(agedays / 7.0),    "weeks old"   #     100 weeks
+    print "You are", '{:0,d}'.format(agedays),            "days old"    #     500 days
+    #print "You are", '{:0,d}'.format(age.days*24),       "hours old"   #   10000 hours
+    #print "You are", '{:0,d}'.format(age.days*24*60),    "minutes old" #  100000 minutes
+    #print "You are", '{:0,d}'.format(age.days*24*60*60), "seconds old" # 1000000 seconds
+    print ''
+    print "You can expect to live approximately", '{:0,.2f}'.format(expect / 365.25), "years"
+    print "You can expect to live approximately", '{:0,.2f}'.format(expect / 30.41),  "months"
+    print "You can expect to live approximately", '{:0,.2f}'.format(expect / 7.0),    "weeks"
+    print "You can expect to live approximately", '{:0,.0f}'.format(expect),          "days"
+    print ''
+    print "You are approximately %.1f %% dead"  % (agedays * 100.0 / lifetime)
+    print "You are approximately %.1f %% alive" % (expect * 100.0 / lifetime)
+    print ''
+
+
+def usage(exitcode):
+    print 'python MementoMori.py [-h|--help] -s <m|f|M|F> -y <year> -m <month> -d <date> [-v|--verbose]'
+    sys.exit(exitcode)
+
+
+def check_opts(argv):
+    year  = 0
+    month = 0
+    day   = 0
+    sex   = 'M'
+    verbose = False
+
+    try:
+        opts, args = getopt.getopt(argv, "hs:y:m:d:v", ["help", "sex=", "year=", "month=", "date=", "verbose"])
+    except getopt.GetoptError:
+        usage(2)
+
+    if opts == []:
+        usage(0)
+
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            usage(0)
+        elif opt in ("-s", "--sex"):
+            sex = arg
+        elif opt in ("-y", "--year"):
+            year = arg
+        elif opt in ("-m", "--month"):
+            month = arg
+        elif opt in ("-d", "--date"):
+            day = arg
+        elif opt in ("-v", "--verbose"):
+            verbose = True
+
+    if year == 0 or month == 0 or day == 0:
+        usage(0)
+
+    try:
+        sex = str(sex)
+    except ValueError:
+        print "<sex> must be one of m, f, M or F"
+        sys.exit()
+
+    try:
+        day = int(day)
+    except ValueError:
+        print "<day> must be 1 to 31"
+        sys.exit()
+
+    try:
+        month = int(month)
+    except ValueError:
+        print "<month> must be 1 to 12"
+        sys.exit()
+
+    try:
+        year = int(year)
+    except ValueError:
+        print "<year> must be 1900 to 10000"
+        sys.exit()
+
+    if sex.upper() != 'M' and sex.upper() != 'F':
+        print "<sex> must be one of m, f, M or F"
+        sys.exit()
+
+    if day < 1 or day > 31:
+        print "<day> must be 1 to 31"
+        sys.exit()
+
+    if month < 1 or month > 12:
+        print "<month> must be 1 to 12"
+        sys.exit()
+
+    if year < 1900 or year > 10000:
+        print "<year> must be 1900 to 10000"
+        sys.exit()
+
+    return [day, month, year, sex.upper(), verbose]
+
+
+# NOTE These are UK-specific lifetime estimates
+# https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/bulletins/nationallifetablesunitedkingdom/20132015
+# What are error bars on these estimates?
+# When and how often do these estimates need to be updated?
+def get_lifetime(sex):
+    if sex == 'M':
+        lifetime = 79.1 * 365.25
+    elif sex == 'F':
+        lifetime = 82.8 * 365.25
+
+    return lifetime
+
+
+def main(argv):
+    day, month, year, sex, verbose = check_opts(argv)
+
+    try:
+        birthday = date(year, month, day)
+
+        now = date.today()
+        age = now - birthday
+
+        lifetime = get_lifetime(sex)
+        expect = lifetime - age.days
+
+        if ( verbose or                                    # print results if verbose is true or
+             age.days % 500  == 0 or expect % 500  == 0 or # 500 days
+             age.days % 700  == 0 or expect % 700  == 0 or # 100 weeks
+             age.days % 1521 == 0 or expect % 1521 == 0 or #  50 months
+             (age.days * 10 % 3652) / 10 == 0 or (expect * 10 % 3652) / 10 == 0 or #  10 years
+             #age.days % 3652.5 == 0 or expect % 3652.5 == 0 or                    #  10 years - don't use decimals with modulo
+             (age.days * 100 / lifetime) % 10 == 0 or         # 10, 20, ... % of lifetime
+             random.randint(1, 366) == 365                 ): # print results approx once per year
+            printAgeInfo(age.days, expect, lifetime)
+
+    except ValueError, err:
+        print 'ERROR:', err
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
