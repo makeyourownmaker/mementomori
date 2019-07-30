@@ -91,8 +91,9 @@ Further info:
 
  * Check and double-check the milestone calculations
  * Support males and females who are older than the life expectancy estimates
- * Expand usage information
- * Add docstrings
+ * Switch to argparse module for CLI option handling
+   * Expand usage information
+   * Replace/simplify check_opts function with argparse choice parameters
  * Add unit tests
  * Return "x years, y months, z weeks and a days" instead of "42.87 years"
  * Add option to print dates for next and/or all future milestone(s)

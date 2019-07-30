@@ -22,6 +22,10 @@ from datetime import date
 
 
 def printAgeInfo(agedays, expect, lifetime):
+    '''
+    Print age and longevity information
+    '''
+
     print('')
     print("You are", '{:0,.2f}'.format(agedays / 365.25), "years old")   #      10 years
     print("You are", '{:0,.2f}'.format(agedays / 30.41),  "months old")  #      50 months
@@ -42,11 +46,19 @@ def printAgeInfo(agedays, expect, lifetime):
 
 
 def usage(exitcode):
+    '''
+    Print usage description
+    '''
+
     print('python mementomori.py [-h|--help] -s <m|f|M|F> -y <year> -m <month> -d <date> [-v|--verbose]')
     sys.exit(exitcode)
 
 
 def check_opts(argv):
+    '''
+    Check command line options within reasonable ranges/choices
+    '''
+
     year  = 0
     month = 0
     day   = 0
@@ -126,6 +138,10 @@ def check_opts(argv):
 # What are error bars on these estimates?
 # When and how often do these estimates need to be updated?
 def get_lifetime(sex):
+    '''
+    Get lifetime based on gender (from https://www.ons.gov.uk/)
+    '''
+
     if sex == 'M':
         lifetime = 79.1 * 365.25
     elif sex == 'F':
