@@ -2,7 +2,7 @@
 # mementomori 
 
 ![Lifecycle
-](https://img.shields.io/badge/lifecycle-xperimental-orange.svg?style=flat)
+](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat)
 ![Dependencies
 ](https://img.shields.io/badge/dependencies-none-brightgreen.svg?style=flat)
 
