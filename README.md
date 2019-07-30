@@ -2,7 +2,7 @@
 # mementomori 
 
 ![Lifecycle
-](https://img.shields.io/badge/experimental-orange.svg?style=flat)
+](https://img.shields.io/badge/lifecycle-xperimental-orange.svg?style=flat)
 ![Dependencies
 ](https://img.shields.io/badge/dependencies-none-brightgreen.svg?style=flat)
 
@@ -53,6 +53,8 @@ You are approximately 67.0 % alive
 ## Installation
 
 Requires a recent version of python.
+
+Both python versions 2 and 3 are supported.
 
 The following should work on any unix-ish environment:
 ```
