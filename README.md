@@ -13,7 +13,7 @@ and *approximately* how many more you will live.
 ## Example Output
 
 Age details and life expectancy estimates for _male_ born on 8th January 1992:
-```
+```sh
 ./mementomori -s m -y 1992 -m 1 -d 8 -v
 
 You are 27.36 years old
@@ -31,7 +31,7 @@ You are approximately 65.4 % alive
 ```
 
 Age details and life expectancy estimates for _female_ born on 8th January 1992:
-```
+```sh
 ./mementomori -s f -y 1992 -m 1 -d 8 -v
 
 You are 27.36 years old
@@ -57,7 +57,7 @@ Requires a recent version of python.
 Both python versions 2 and 3 are supported.
 
 The following should work on any unix-ish environment:
-```
+```sh
 wget https://raw.githubusercontent.com/makeyourownmaker/mementomori/master/mementomori
 chmod u+x mementomori
 ./mementomori -h
@@ -82,7 +82,7 @@ In this case, it only displays ages and lifetime estimates on the following "mil
  * every 10th percentile (10, 20, 30 ... %) of lifetime estimate
 
 Further info:
-```
+```sh
 ./mementomori -h
 ```
 
