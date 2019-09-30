@@ -5,7 +5,7 @@ from __future__ import (division, print_function, absolute_import,
                         unicode_literals)
 
 import sys
-import getopt
+import argparse
 import random
 from datetime import date
 
@@ -13,8 +13,6 @@ from datetime import date
 # TODO
 #      Check and double-check the milestone calculations
 #      Support males and females who are older than the life expectancy estimates
-#      Expand usage information
-#      Add docstrings
 #      Add unit tests
 #      Return "x years, y months, z weeks and a days" instead of "42.87 years"
 #      Add option to print dates for next and/or all future milestone(s)
@@ -45,94 +43,6 @@ def printAgeInfo(agedays, expect, lifetime):
     print('')
 
 
-def usage(exitcode):
-    '''
-    Print usage description
-    '''
-
-    print('python mementomori.py [-h|--help] -s <m|f|M|F> -y <year> -m <month> -d <date> [-v|--verbose]')
-    sys.exit(exitcode)
-
-
-def check_opts(argv):
-    '''
-    Check command line options within reasonable ranges/choices
-    '''
-
-    year  = 0
-    month = 0
-    day   = 0
-    sex   = 'M'
-    verbose = False
-
-    try:
-        opts, args = getopt.getopt(argv, "hs:y:m:d:v", ["help", "sex=", "year=", "month=", "date=", "verbose"])
-    except getopt.GetoptError:
-        usage(2)
-
-    if opts == []:
-        usage(0)
-
-    for opt, arg in opts:
-        if opt in ("-h", "--help"):
-            usage(0)
-        elif opt in ("-s", "--sex"):
-            sex = arg
-        elif opt in ("-y", "--year"):
-            year = arg
-        elif opt in ("-m", "--month"):
-            month = arg
-        elif opt in ("-d", "--date"):
-            day = arg
-        elif opt in ("-v", "--verbose"):
-            verbose = True
-
-    if year == 0 or month == 0 or day == 0:
-        usage(0)
-
-    try:
-        sex = str(sex)
-    except ValueError:
-        print("<sex> must be one of m, f, M or F")
-        sys.exit()
-
-    try:
-        day = int(day)
-    except ValueError:
-        print("<day> must be 1 to 31")
-        sys.exit()
-
-    try:
-        month = int(month)
-    except ValueError:
-        print("<month> must be 1 to 12")
-        sys.exit()
-
-    try:
-        year = int(year)
-    except ValueError:
-        print("<year> must be 1900 to 10000")
-        sys.exit()
-
-    if sex.upper() != 'M' and sex.upper() != 'F':
-        print("<sex> must be one of m, f, M or F")
-        sys.exit()
-
-    if day < 1 or day > 31:
-        print("<day> must be 1 to 31")
-        sys.exit()
-
-    if month < 1 or month > 12:
-        print("<month> must be 1 to 12")
-        sys.exit()
-
-    if year < 1900 or year > 10000:
-        print("<year> must be 1900 to 10000")
-        sys.exit()
-
-    return [day, month, year, sex.upper(), verbose]
-
-
 # NOTE These are UK-specific lifetime estimates
 # https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/bulletins/nationallifetablesunitedkingdom/20132015
 # What are error bars on these estimates?
@@ -142,16 +52,22 @@ def get_lifetime(sex):
     Get lifetime based on gender (from https://www.ons.gov.uk/)
     '''
 
-    if sex == 'M':
+    lifetime = 0
+
+    if sex.upper() == 'M':
         lifetime = 79.1 * 365.25
-    elif sex == 'F':
+    elif sex.upper() == 'F':
         lifetime = 82.8 * 365.25
 
     return lifetime
 
 
-def main(argv):
-    day, month, year, sex, verbose = check_opts(argv)
+def main(args):
+    day     = args.date
+    month   = args.month
+    year    = args.year
+    sex     = args.sex
+    verbose = args.verbose
 
     try:
         birthday = date(year, month, day)
@@ -178,4 +94,28 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    parser = argparse.ArgumentParser(
+            description="Memento mori - Remmeber death https://github.com/makeyourownmaker/ParametricWeatherModel")
+    optional = parser._action_groups.pop()
+    required = parser.add_argument_group('required arguments')
+    required.add_argument('-s', '--sex',
+            help='Sex (m or M for male and f or F for female)',
+            required=True, type=str, choices=['m', 'M', 'f', 'F'])
+    required.add_argument('-y', '--year',
+            help='Year of birth (1900 onwards)',
+            required=True, type=int)
+    required.add_argument('-m', '--month',
+            help='Month of birth (1 to 12)',
+            required=True, type=int, metavar='[1, 12]', choices=range(1, 13))
+    required.add_argument('-d', '--date',
+            help='Day of birth (1 to 31)',
+            required=True, type=int, metavar='[1, 31]', choices=range(1, 32))
+
+    optional.add_argument('-v',  '--verbose',
+            help='Print additional information',
+            default=True, action="store_false")
+
+    parser._action_groups.append(optional)
+    args = parser.parse_args()
+
+    main(args)
