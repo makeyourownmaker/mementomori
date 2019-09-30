@@ -86,18 +86,38 @@ Further info:
 ./mementomori -h
 ```
 
+### Command-line options
+
+There are two types of arguments, required and optional.
+
+Required arguments:
+
+| Name  | Short | Long    | Description                                |
+|-------|-------|---------|--------------------------------------------|
+| Sex   | -s    | --sex   | Sex; m or M for male and f or F for female |
+| Year  | -y    | --year  | Year of birth; 1900 onwards                |
+| Month | -m    | --month | Month of birth; 1 to 12                    |
+| Date  | -d    | --date  | Date of birth; 1 to 31                     |
+
+Optional arguments:
+
+| Name    | Short | Long      | Description                  |
+|---------|-------|-----------|------------------------------|
+| Help    | -h    | --help    | Print help message and exit  |
+| Verbose | -v    | --verbose | Print additional information |
+  
 
 ## Roadmap
 
  * Check and double-check the milestone calculations
  * Support males and females who are older than the life expectancy estimates
- * Switch to argparse module for CLI option handling
-   * Expand usage information
-   * Replace/simplify check_opts function with argparse choice parameters
  * Add unit tests
- * Return "x years, y months, z weeks and a days" instead of "42.87 years"
- * Add option to print dates for next and/or all future milestone(s)
-        eg 15,000 days old on ...
+   * Setup travis CI
+ * Improve output
+   * Return "x years, y months, z weeks and a days" instead of "42.87 years"
+ * New functionality
+   * Add option to print dates for next and/or all future milestone(s)
+     * eg 15,000 days old on ...
 
 
 ## Contributing
