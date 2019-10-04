@@ -43,10 +43,10 @@ def printAgeInfo(agedays, expect, lifetime):
     print('')
 
 
-# NOTE These are UK-specific lifetime estimates
-# https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/bulletins/nationallifetablesunitedkingdom/20132015
+# NOTE These are UK-specific lifetime estimates from the Office for National Statistics
+# https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/bulletins/nationallifetablesunitedkingdom/2016to2018
 # What are error bars on these estimates?
-# When and how often do these estimates need to be updated?
+# These estimates are updated every 3 years
 def get_lifetime(sex):
     '''
     Get lifetime based on gender (from https://www.ons.gov.uk/)
@@ -55,9 +55,9 @@ def get_lifetime(sex):
     lifetime = 0
 
     if sex.upper() == 'M':
-        lifetime = 79.1 * 365.25
+        lifetime = 79.3 * 365.25
     elif sex.upper() == 'F':
-        lifetime = 82.8 * 365.25
+        lifetime = 82.9 * 365.25
 
     return lifetime
 
