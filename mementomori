@@ -19,6 +19,21 @@ from datetime import date
 #        eg 15,000 days old on ...
 
 
+def int_range(min=None, max=None):
+    def check_range(x):
+        x = int(x)
+
+        if x < min and min is not None:
+            raise argparse.ArgumentTypeError("%r not in range [%r, %r]" % (x, min, max))
+
+        if x > max and max is not None:
+            raise argparse.ArgumentTypeError("%r not in range [%r, %r]" % (x, min, max))
+
+        return x
+
+    return check_range
+
+
 def printAgeInfo(agedays, expect, lifetime):
     '''
     Print age and longevity information
@@ -102,13 +117,13 @@ if __name__ == "__main__":
             help='Sex (m or M for male and f or F for female)',
             required=True, type=str, choices=['m', 'M', 'f', 'F'])
     required.add_argument('-y', '--year',
-            help='Year of birth (1900 onwards)',
-            required=True, type=int)
+            help='Year of birth',
+            required=True, type=int_range(1900, 9999), metavar="[1900, 9999]")
     required.add_argument('-m', '--month',
-            help='Month of birth (1 to 12)',
+            help='Month of birth',
             required=True, type=int, metavar='[1, 12]', choices=range(1, 13))
     required.add_argument('-d', '--date',
-            help='Day of birth (1 to 31)',
+            help='Day of birth',
             required=True, type=int, metavar='[1, 31]', choices=range(1, 32))
 
     optional.add_argument('-v',  '--verbose',
