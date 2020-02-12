@@ -9,6 +9,8 @@
 mementomori is a python script for reflecting on how many days, weeks, months and years you've been alive
 and *approximately* how many more you will live.
 
+If you like mementomori, give it a star, or fork it and contribute!
+
 
 ## Example Output
 
