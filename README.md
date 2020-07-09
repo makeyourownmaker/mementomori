@@ -131,6 +131,10 @@ Pull requests are welcome.  For major changes, please open an issue first to dis
 
 * [Memento mori on Wikipedia](https://en.wikipedia.org/wiki/Memento_mori)
 * [Your Life in Weeks](https://waitbutwhy.com/2014/05/life-weeks.html)
+* [The Death Clock](https://www.death-clock.org/)
+* [Death Timer](https://www.deathtimer.com/)
+* [Find Your Fate Death Clock](https://www.findyourfate.com/deathmeter/deathmtr.html)
+* [Adafruit Mindfulness Clock OF DOOM](https://learn.adafruit.com/mindfulness-clock-of-doom)
 
 
 ## License
