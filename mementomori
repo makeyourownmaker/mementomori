@@ -10,15 +10,6 @@ import random
 from datetime import date
 
 
-# TODO
-#      Check and double-check the milestone calculations
-#      Support males and females who are older than the life expectancy estimates
-#      Add unit tests
-#      Return "x years, y months, z weeks and a days" instead of "42.87 years"
-#      Add option to print dates for next and/or all future milestone(s)
-#        eg 15,000 days old on ...
-
-
 def int_range(min=None, max=None):
     def check_range(x):
         x = int(x)
@@ -40,13 +31,13 @@ def printAgeInfo(agedays, expect, lifetime):
     '''
 
     print('')
-    print("You are", '{:0,.2f}'.format(agedays / 365.25), "years old")   #      10 years
-    print("You are", '{:0,.2f}'.format(agedays / 30.41),  "months old")  #      50 months
-    print("You are", '{:0,.2f}'.format(agedays / 7.0),    "weeks old")   #     100 weeks
-    print("You are", '{:0,d}'.format(agedays),            "days old")    #     500 days
-    #print("You are", '{:0,d}'.format(age.days*24),       "hours old")   #   10000 hours
-    #print("You are", '{:0,d}'.format(age.days*24*60),    "minutes old") #  100000 minutes
-    #print("You are", '{:0,d}'.format(age.days*24*60*60), "seconds old") # 1000000 seconds
+    print("You are", '{:0,.2f}'.format(agedays / 365.25), "years old")    #      10 years
+    print("You are", '{:0,.2f}'.format(agedays / 30.41),  "months old")   #      50 months
+    print("You are", '{:0,.2f}'.format(agedays / 7.0),    "weeks old")    #     100 weeks
+    print("You are", '{:0,d}'.format(agedays),            "days old")     #     500 days
+    # print("You are", '{:0,d}'.format(age.days*24),       "hours old")   #   10000 hours
+    # print("You are", '{:0,d}'.format(age.days*24*60),    "minutes old") #  100000 minutes
+    # print("You are", '{:0,d}'.format(age.days*24*60*60), "seconds old") # 1000000 seconds
     print('')
     print("You can expect to live approximately", '{:0,.2f}'.format(expect / 365.25), "years")
     print("You can expect to live approximately", '{:0,.2f}'.format(expect / 30.41),  "months")
@@ -109,6 +100,8 @@ def main(args):
 
 
 if __name__ == "__main__":
+    year = date.today().year
+
     parser = argparse.ArgumentParser(
             description="Memento mori - Remmeber death https://github.com/makeyourownmaker/ParametricWeatherModel")
     optional = parser._action_groups.pop()
@@ -118,7 +111,7 @@ if __name__ == "__main__":
             required=True, type=str, choices=['m', 'M', 'f', 'F'])
     required.add_argument('-y', '--year',
             help='Year of birth',
-            required=True, type=int_range(1900, 9999), metavar="[1900, 9999]")
+            required=True, type=int_range(1900, year), metavar="[1900, " + str(year) + "]")
     required.add_argument('-m', '--month',
             help='Month of birth',
             required=True, type=int, metavar='[1, 12]', choices=range(1, 13))
