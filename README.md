@@ -103,18 +103,21 @@ Required arguments:
 
 Optional arguments:
 
-| Name    | Short | Long      | Description                  |
-|---------|-------|-----------|------------------------------|
-| Help    | -h    | --help    | Print help message and exit  |
-| Verbose | -v    | --verbose | Print additional information |
-  
+| Name     | Short | Long       | Description                  |
+|----------|-------|------------|------------------------------|
+| Help     | -h    | --help     | Print help message and exit  |
+| Verbose  | -v    | --verbose  | Print additional information |
+| Lifetime | -l    | --lifetime | Expected lifetime in years   |
+
+The -l/--lifetime option overrides the default male and female expected
+lifetimes.
+
 
 ## Roadmap
 
  * Check and double-check the milestone calculations
  * Support males and females who are older than the life expectancy estimates
  * Add unit tests
-   * Setup travis CI
  * Improve output
    * Return "x years, y months, z weeks and a days" instead of "42.87 years"
  * New functionality

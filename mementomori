@@ -31,13 +31,10 @@ def printAgeInfo(agedays, expect, lifetime):
     '''
 
     print('')
-    print("You are", '{:0,.2f}'.format(agedays / 365.25), "years old")    #      10 years
-    print("You are", '{:0,.2f}'.format(agedays / 30.41),  "months old")   #      50 months
-    print("You are", '{:0,.2f}'.format(agedays / 7.0),    "weeks old")    #     100 weeks
-    print("You are", '{:0,d}'.format(agedays),            "days old")     #     500 days
-    # print("You are", '{:0,d}'.format(age.days*24),       "hours old")   #   10000 hours
-    # print("You are", '{:0,d}'.format(age.days*24*60),    "minutes old") #  100000 minutes
-    # print("You are", '{:0,d}'.format(age.days*24*60*60), "seconds old") # 1000000 seconds
+    print("You are", '{:0,.2f}'.format(agedays / 365.25), "years old")   #  10 years
+    print("You are", '{:0,.2f}'.format(agedays / 30.41),  "months old")  #  50 months
+    print("You are", '{:0,.2f}'.format(agedays / 7.0),    "weeks old")   # 100 weeks
+    print("You are", '{:0,d}'.format(agedays),            "days old")    # 500 days
     print('')
     print("You can expect to live approximately", '{:0,.2f}'.format(expect / 365.25), "years")
     print("You can expect to live approximately", '{:0,.2f}'.format(expect / 30.41),  "months")
@@ -81,15 +78,15 @@ def main(args):
         now = date.today()
         age = now - birthday
 
-        lifetime = get_lifetime(sex)
+        if args.lifetime == 0:
+            lifetime = get_lifetime(sex)
         expect = lifetime - age.days
 
         if ( verbose or                                     # print results if verbose is true or
              age.days % 500  == 0 or expect % 500  == 0 or  # 500 days
              age.days % 700  == 0 or expect % 700  == 0 or  # 100 weeks
              age.days % 1521 == 0 or expect % 1521 == 0 or  #  50 months
-             (age.days * 10 % 3652) / 10 == 0 or (expect * 10 % 3652) / 10 == 0 or  #  10 years
-             #age.days % 3652.5 == 0 or expect % 3652.5 == 0 or                     #  10 years - don't use decimals with modulo
+             (age.days * 10 % 3652) / 10 == 0 or (expect * 10 % 3652) / 10 == 0 or  # 10 years
              (age.days * 100 / lifetime) % 10 == 0 or          # 10, 20, ... % of lifetime
              random.randint(1, 366) == 365                 ):  # print results approx once per year
             printAgeInfo(age.days, expect, lifetime)
@@ -119,6 +116,9 @@ if __name__ == "__main__":
             help='Day of birth',
             required=True, type=int, metavar='[1, 31]', choices=range(1, 32))
 
+    optional.add_argument('-l', '--lifetime',
+            help='Expected lifetime in years',
+            default=0, type=float, metavar='[1, 100]', choices=range(1, 101))
     optional.add_argument('-v',  '--verbose',
             help='Print additional information',
             default=True, action="store_false")
