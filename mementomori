@@ -136,4 +136,9 @@ if __name__ == "__main__":
         print("ERROR: 'today' " + str(date.today()))
         exit()
 
+    if args.birthdate.year < 1900:
+        print("ERROR: 'birthdate' cannot before 1900")
+        print("ERROR: 'birthdate' %s" % args.birthdate.date())
+        exit()
+
     main(args)
