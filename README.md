@@ -2,7 +2,7 @@
 # mementomori 
 
 ![Lifecycle
-](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat)
+](https://img.shields.io/badge/lifecycle-maturing-blue.svg?style=flat)
 ![Dependencies
 ](https://img.shields.io/badge/dependencies-none-brightgreen.svg?style=flat)
 
@@ -16,7 +16,7 @@ If you like mementomori, give it a star, or fork it and contribute!
 
 Age details and life expectancy estimates for _male_ born on 8th January 1992:
 ```sh
-./mementomori -s m -y 1992 -m 1 -d 8 -v
+./mementomori -s m -b 1992-01-08
 
 You are 27.36 years old
 You are 328.67 months old
@@ -34,7 +34,7 @@ You are approximately 65.4 % alive
 
 Age details and life expectancy estimates for _female_ born on 8th January 1992:
 ```sh
-./mementomori -s f -y 1992 -m 1 -d 8 -v
+./mementomori -s f -b 1992-01-08
 
 You are 27.36 years old
 You are 328.67 months old
@@ -94,18 +94,16 @@ There are two types of arguments, required and optional.
 
 Required arguments:
 
-| Name  | Short | Long    | Description                                |
-|-------|-------|---------|--------------------------------------------|
-| Year  | -y    | --year  | Year of birth; 1900 onwards                |
-| Month | -m    | --month | Month of birth; 1 to 12                    |
-| Date  | -d    | --date  | Date of birth; 1 to 31                     |
+| Name       | Short | Long        | Description                       |
+|------------|-------|-------------|-----------------------------------|
+| Birth date | -b    | --birthdate | Date of birth - format YYYY-MM-DD |
 
-Mutually exclusive arguments:
+Required but mutually exclusive arguments:
 
 | Name     | Short | Long       | Description                                |
 |----------|-------|------------|--------------------------------------------|
-| Lifetime | -l    | --lifetime | Expected lifetime in years                 |
 | Sex      | -s    | --sex      | Sex; m or M for male and f or F for female |
+| Lifetime | -l    | --lifetime | Expected lifetime in years                 |
 
 Either the -l/--lifetime or -s/--sex option is required but both cannot be
 used together.
@@ -124,11 +122,10 @@ Optional arguments:
 ## Roadmap
 
  * Check and double-check the milestone calculations
- * Support males and females who are older than the life expectancy estimates
- * Add unit tests
- * Improve output
+ * Better support males and females who are older than the life expectancy estimates
+ * Improve output:
    * Return "x years, y months, z weeks and a days" instead of "42.87 years"
- * New functionality
+ * New functionality:
    * Add option to print dates for next and/or all future milestone(s)
      * eg 15,000 days old on ...
 
