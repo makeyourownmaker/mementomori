@@ -96,10 +96,22 @@ Required arguments:
 
 | Name  | Short | Long    | Description                                |
 |-------|-------|---------|--------------------------------------------|
-| Sex   | -s    | --sex   | Sex; m or M for male and f or F for female |
 | Year  | -y    | --year  | Year of birth; 1900 onwards                |
 | Month | -m    | --month | Month of birth; 1 to 12                    |
 | Date  | -d    | --date  | Date of birth; 1 to 31                     |
+
+Mutually exclusive arguments:
+
+| Name     | Short | Long       | Description                                |
+|----------|-------|------------|--------------------------------------------|
+| Lifetime | -l    | --lifetime | Expected lifetime in years                 |
+| Sex      | -s    | --sex      | Sex; m or M for male and f or F for female |
+
+Either the -l/--lifetime or -s/--sex option is required but both cannot be
+used together.
+
+The -l/--lifetime option overrides the default male and female expected
+lifetimes.
 
 Optional arguments:
 
@@ -107,10 +119,6 @@ Optional arguments:
 |----------|-------|------------|------------------------------|
 | Help     | -h    | --help     | Print help message and exit  |
 | Verbose  | -v    | --verbose  | Print additional information |
-| Lifetime | -l    | --lifetime | Expected lifetime in years   |
-
-The -l/--lifetime option overrides the default male and female expected
-lifetimes.
 
 
 ## Roadmap
