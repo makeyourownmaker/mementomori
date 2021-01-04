@@ -7,7 +7,15 @@ from __future__ import (division, print_function, absolute_import,
 import sys
 import argparse
 import random
-from datetime import date
+from datetime import datetime, date
+
+
+def valid_date(s):
+    try:
+        return datetime.strptime(s, "%Y-%m-%d")
+    except ValueError:
+        msg = "Not a valid date: '{0}'.".format(s)
+        raise argparse.ArgumentTypeError(msg)
 
 
 def int_range(min=None, max=None):
@@ -70,9 +78,9 @@ def get_lifetime(args):
 
 
 def main(args):
-    day     = args.date
-    month   = args.month
-    year    = args.year
+    day     = args.birthdate.day
+    month   = args.birthdate.month
+    year    = args.birthdate.year
     verbose = args.verbose
 
     try:
@@ -99,21 +107,12 @@ def main(args):
 
 
 if __name__ == "__main__":
-    year = date.today().year
-
     parser = argparse.ArgumentParser(
             description="Memento mori - Remmeber death https://github.com/makeyourownmaker/ParametricWeatherModel")
-    optional = parser._action_groups.pop()
     required = parser.add_argument_group('required arguments')
-    required.add_argument('-y', '--year',
-            help='Year of birth',
-            required=True, type=int_range(1900, year), metavar="[1900, " + str(year) + "]")
-    required.add_argument('-m', '--month',
-            help='Month of birth',
-            required=True, type=int, metavar='[1, 12]', choices=range(1, 13))
-    required.add_argument('-d', '--date',
-            help='Day of birth',
-            required=True, type=int, metavar='[1, 31]', choices=range(1, 32))
+    required.add_argument('-b', '--birthdate',
+            help='Date of birth - format YYYY-MM-DD',
+            required=True, type=valid_date)
 
     mutex = parser.add_mutually_exclusive_group()
     mutex.add_argument('-s', '--sex',
@@ -123,11 +122,18 @@ if __name__ == "__main__":
             help='Expected lifetime in years',
             nargs='?', default=0, type=float, metavar='[1, 100]', choices=range(1, 101))
 
+    optional = parser._action_groups.pop()
     optional.add_argument('-v',  '--verbose',
             help='Print additional information',
             default=True, action="store_false")
 
     parser._action_groups.append(optional)
     args = parser.parse_args()
+
+    if args.birthdate.date() > date.today():
+        print("ERROR: 'birthdate' cannot be in the future")
+        print("ERROR: 'birthdate' %s" % args.birthdate.date())
+        print("ERROR: 'today' " + str(date.today()))
+        exit()
 
     main(args)
