@@ -105,9 +105,6 @@ if __name__ == "__main__":
             description="Memento mori - Remmeber death https://github.com/makeyourownmaker/ParametricWeatherModel")
     optional = parser._action_groups.pop()
     required = parser.add_argument_group('required arguments')
-    required.add_argument('-s', '--sex',
-            help='Sex (m or M for male and f or F for female)',
-            required=True, type=str, choices=['m', 'M', 'f', 'F'])
     required.add_argument('-y', '--year',
             help='Year of birth',
             required=True, type=int_range(1900, year), metavar="[1900, " + str(year) + "]")
@@ -118,9 +115,14 @@ if __name__ == "__main__":
             help='Day of birth',
             required=True, type=int, metavar='[1, 31]', choices=range(1, 32))
 
-    optional.add_argument('-l', '--lifetime',
+    mutex = parser.add_mutually_exclusive_group()
+    mutex.add_argument('-s', '--sex',
+            help='Sex (m or M for male and f or F for female)',
+            nargs='?', type=str, choices=['m', 'M', 'f', 'F'])
+    mutex.add_argument('-l', '--lifetime',
             help='Expected lifetime in years',
-            default=0, type=float, metavar='[1, 100]', choices=range(1, 101))
+            nargs='?', default=0, type=float, metavar='[1, 100]', choices=range(1, 101))
+
     optional.add_argument('-v',  '--verbose',
             help='Print additional information',
             default=True, action="store_false")
