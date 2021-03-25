@@ -119,12 +119,12 @@ if __name__ == "__main__":
             help='Sex (m or M for male and f or F for female)',
             nargs='?', type=str, choices=['m', 'M', 'f', 'F'])
     mutex.add_argument('-l', '--lifetime',
-            help='Expected lifetime in years',
+            help='Expected lifetime in years - default=%(default)s',
             nargs='?', default=0, type=float, metavar='[1, 100]', choices=range(1, 101))
 
     optional = parser._action_groups.pop()
     optional.add_argument('-v',  '--verbose',
-            help='Print additional information',
+            help='Print additional information - default=%(default)s',
             default=True, action="store_false")
 
     parser._action_groups.append(optional)
